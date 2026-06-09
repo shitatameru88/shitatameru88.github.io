@@ -3,12 +3,99 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MangaRead Reader — Privacy-first manga reader for iOS</title>
-  <meta name="description" content="A local-first manga and comic reader for iOS. No accounts. No bundled content. Optional user-managed sources." />
-  <meta property="og:title" content="MangaRead Reader" />
-  <meta property="og:description" content="Privacy-first manga reader for iOS. Local library, optional sources, no tracking." />
+  <title>MangaRead — Free Manga Reader for iPhone | Offline, No Account</title>
+  <meta name="description" content="MangaRead is the best free manga reader for iPhone. Read manga offline with no account, no subscription, and no bundled content. Supports CBZ, CBR and optional user-managed sources. iOS 16+." />
+  <link rel="canonical" href="https://shitatameru88.github.io/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="MangaRead — Free Manga Reader for iPhone | Offline, No Account" />
+  <meta property="og:description" content="Read manga free on iPhone. Offline downloads, no account, no subscription, no tracking. The privacy-first manga app for iOS." />
   <meta property="og:url" content="https://shitatameru88.github.io/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="MangaRead — Free Manga Reader for iPhone" />
+  <meta name="twitter:description" content="Read manga free on iPhone. Offline, no account, no subscription." />
   <meta name="theme-color" content="#0d0d14" />
+
+  <!-- SoftwareApplication Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "MangaRead",
+    "description": "Free manga reader for iPhone. Read manga offline with no account and no subscription. Supports CBZ, CBR, ZIP local libraries and optional user-managed online sources.",
+    "applicationCategory": "EntertainmentApplication",
+    "operatingSystem": "iOS 16+",
+    "url": "https://shitatameru88.github.io/",
+    "downloadUrl": "https://apps.apple.com/app/id6774454909",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "MangaRead"
+    }
+  }
+  </script>
+
+  <!-- FAQPage Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is MangaRead completely free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. MangaRead is free to download on the App Store with no subscription and no in-app purchases required to read."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need an account to use MangaRead?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No account is required. Everything — your library, reading progress, and history — is stored locally on your iPhone. Nothing is sent to a server."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I read manga offline on iPhone?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. You can download any chapter for offline reading. Manage your downloaded chapters from Settings whenever you need storage space back."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is MangaRead a Tachiyomi alternative for iOS?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. MangaRead brings the same user-managed sources experience from Tachiyomi to iPhone and iPad, with a native iOS design, offline downloads, and full privacy."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What manga file formats does MangaRead support?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "MangaRead supports CBZ, CBR, and ZIP comic archives imported from the Files app. Online reading is available via optional user-enabled sources."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does MangaRead have ads?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The app is ad-supported to stay free. Ads are shown in the browse area only — the reader itself is completely ad-free so nothing interrupts your reading."
+        }
+      }
+    ]
+  }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
@@ -415,6 +502,52 @@
       font-weight: 900;
     }
 
+    /* ── FAQ ── */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .faq-item {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+
+    .faq-item summary {
+      padding: 20px 24px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      transition: color .2s;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary:hover { color: var(--accent); }
+    .faq-item summary::after {
+      content: '+';
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--text3);
+      flex-shrink: 0;
+      transition: transform .25s;
+    }
+    .faq-item[open] summary::after { transform: rotate(45deg); }
+
+    .faq-answer {
+      padding: 16px 24px 20px;
+      font-size: 0.9rem;
+      color: var(--text2);
+      line-height: 1.7;
+      border-top: 1px solid var(--border);
+    }
+
     /* ── CTA ── */
     .cta {
       text-align: center;
@@ -504,11 +637,12 @@
   <div class="nav-links">
     <a href="#features">Features</a>
     <a href="#guide">Guide</a>
+    <a href="#faq">FAQ</a>
     <a href="#privacy">Privacy</a>
     <!-- Replace href with your actual App Store URL -->
     <a href="https://apps.apple.com/app/id6774454909" class="btn-download-sm" id="nav-download">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-      Download
+      Download Free
     </a>
   </div>
 </nav>
@@ -544,8 +678,8 @@
     </div>
   </div>
 
-  <h1>MangaRead Reader</h1>
-  <p>A privacy-first manga and comic reader for iOS. Your library, your device, no accounts required.</p>
+  <h1>Free Manga Reader for iPhone</h1>
+  <p>MangaRead — read manga offline with no account, no subscription, and no bundled content. Your library, your device, your rules.</p>
 
   <div class="hero-badges">
     <!-- Replace href with your actual App Store URL -->
@@ -568,49 +702,49 @@
 <!-- ── FEATURES ── -->
 <section class="section" id="features">
   <div class="section-label">What's inside</div>
-  <h2 class="section-title">Everything you need.<br>Nothing you don't.</h2>
-  <p class="section-sub">Built for readers who want control — over their content, their data, and their experience.</p>
+  <h2 class="section-title">Best manga reading experience on iPhone.<br>Nothing you don't need.</h2>
+  <p class="section-sub">MangaRead is a free manga reader app for iPhone built for readers who want full control — over their content, their data, and their reading experience. No account. No subscription. No tracking.</p>
 
   <div class="features-grid">
     <div class="feature-card">
       <div class="feature-icon">📚</div>
-      <h3>Local Library</h3>
-      <p>Import CBZ, CBR, and ZIP comic archives directly from Files. Your collection stays on your device — no cloud uploads, no syncing.</p>
+      <h3>Offline Local Library</h3>
+      <p>Import CBZ, CBR, and ZIP comic archives directly from Files. Read manga offline — your collection stays on your device with no cloud uploads or syncing required.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">🔍</div>
       <h3>User-managed Sources</h3>
-      <p>Optional community source adapters let you search and read from sources you choose to enable. Everything is opt-in and transparent.</p>
+      <p>Optional community source adapters let you search and read from sources you choose to enable. Everything is opt-in and transparent — the Tachiyomi experience on iOS.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">📖</div>
-      <h3>Smart Reader</h3>
-      <p>Webtoon scroll, vertical, right-to-left paged, and left-to-right paged modes. Adaptive brightness, double-page, and border crop. Tap zones for one-hand navigation.</p>
+      <h3>Smart Manga Reader</h3>
+      <p>Webtoon scroll, vertical, right-to-left paged, and left-to-right paged modes. Pinch-to-zoom, volume button navigation, adaptive brightness, double-page, and border crop.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">📊</div>
       <h3>Reading Insights</h3>
-      <p>Track reading sessions, chapters completed, and time spent — all stored locally. Never sent anywhere.</p>
+      <p>Track reading sessions, chapters completed, and time spent — all stored locally on your iPhone. Your reading history is never sent anywhere.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">🔔</div>
-      <h3>Chapter Alerts</h3>
-      <p>Save titles to your library and get notified when new chapters are detected. Pull down in Updates to check manually any time.</p>
+      <h3>New Chapter Alerts</h3>
+      <p>Save titles to your library and get notified when new chapters are available. Pull down in Updates to check manually any time.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">💾</div>
-      <h3>Offline Downloads</h3>
-      <p>Download full chapters and read without an internet connection. Manage your cache from Settings whenever you need space back.</p>
+      <h3>Download for Offline Reading</h3>
+      <p>Download full chapters and read manga offline without an internet connection. Manage your cache from Settings whenever you need space back.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">🔒</div>
       <h3>App Lock</h3>
-      <p>Protect your library with Face ID, Touch ID, or your device passcode. No accounts to hack — everything stays on-device.</p>
+      <p>Protect your manga library with Face ID, Touch ID, or your device passcode. No accounts to hack — everything stays on-device.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">♻️</div>
       <h3>Backup &amp; Restore</h3>
-      <p>Export your library metadata and archive files as a local ZIP. Restore on any device without a server in the middle.</p>
+      <p>Export your library metadata and archive files as a local ZIP. Restore on any iPhone without a server in the middle.</p>
     </div>
   </div>
 </section>
@@ -620,8 +754,8 @@
 <!-- ── GUIDE ── -->
 <section class="section" id="guide">
   <div class="section-label">Getting started</div>
-  <h2 class="section-title">How to enable<br>User Sources</h2>
-  <p class="section-sub">Sources are off by default. Here's how to turn them on and start reading.</p>
+  <h2 class="section-title">How to read manga online<br>with User Sources</h2>
+  <p class="section-sub">Sources are off by default. Here's how to turn them on and start reading manga on your iPhone in minutes.</p>
 
   <div class="guide-steps">
     <div class="step">
@@ -648,7 +782,7 @@
     <div class="step">
       <div class="step-num">4</div>
       <div class="step-body">
-        <h3>Go to Browse and search</h3>
+        <h3>Browse and search manga</h3>
         <p>Head to the <code>Browse</code> tab. The search bar will now say <em>"Search in [Source Name]"</em>. Type any title to start reading. Save titles to your library from the manga detail screen.</p>
       </div>
     </div>
@@ -673,10 +807,10 @@
   <div class="privacy-strip-inner">
     <div>
       <div class="section-label" style="margin-bottom: 8px;">Privacy by design</div>
-      <h2 class="section-title" style="font-size: 1.6rem; margin-bottom: 0;">Built local-first. Always.</h2>
+      <h2 class="section-title" style="font-size: 1.6rem; margin-bottom: 0;">Free manga app. Zero tracking.</h2>
     </div>
     <div class="privacy-points">
-      <div class="privacy-point"><span class="check"></span>No user accounts</div>
+      <div class="privacy-point"><span class="check"></span>No user accounts required</div>
       <div class="privacy-point"><span class="check"></span>No bundled copyrighted content</div>
       <div class="privacy-point"><span class="check"></span>Reading history stays on-device</div>
       <div class="privacy-point"><span class="check"></span>Sources are optional and opt-in</div>
@@ -686,10 +820,46 @@
   </div>
 </section>
 
+<div class="divider"></div>
+
+<!-- ── FAQ ── -->
+<section class="section" id="faq">
+  <div class="section-label">FAQ</div>
+  <h2 class="section-title">Common questions about<br>MangaRead for iPhone</h2>
+  <p class="section-sub">Everything you need to know before downloading the best free manga reader app for iOS.</p>
+
+  <div class="faq-list">
+    <details class="faq-item">
+      <summary>Is MangaRead completely free?</summary>
+      <p class="faq-answer">Yes. MangaRead is free to download on the App Store with no subscription and no in-app purchases required to read. The app is ad-supported in the browse area to stay free — the reader itself is completely ad-free.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Do I need an account to use MangaRead?</summary>
+      <p class="faq-answer">No account is ever required. Everything — your manga library, reading progress, and chapter history — is stored locally on your iPhone. Nothing is sent to a server and there is nothing to sign up for.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Can I read manga offline on my iPhone?</summary>
+      <p class="faq-answer">Yes. Tap the download icon on any chapter to save it for offline reading. Downloaded chapters are available without any internet connection. You can manage and delete downloads from the Settings screen to free up storage.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Is MangaRead a Tachiyomi alternative for iOS?</summary>
+      <p class="faq-answer">Yes. MangaRead brings the same user-managed sources experience from Tachiyomi to iPhone and iPad, with a fully native iOS design. You get the same freedom to enable sources you want, with offline downloads, reading history, and full privacy — no Android device needed.</p>
+    </details>
+    <details class="faq-item">
+      <summary>What file formats does MangaRead support?</summary>
+      <p class="faq-answer">MangaRead supports CBZ, CBR, and ZIP comic archives imported from the Files app for offline local reading. For online reading, enable one or more user-managed sources from the More tab — sources are opt-in and transparent.</p>
+    </details>
+    <details class="faq-item">
+      <summary>What reading modes are available?</summary>
+      <p class="faq-answer">MangaRead supports webtoon (continuous vertical scroll), standard vertical, right-to-left paged (for traditional manga), and left-to-right paged (for western comics). The reader includes pinch-to-zoom, volume button page navigation, keep-screen-on, and fullscreen immersive mode.</p>
+    </details>
+  </div>
+</section>
+
 <!-- ── CTA ── -->
 <section class="cta">
-  <h2>Start reading today.</h2>
-  <p>Free on the App Store. No account. No subscription required to get started.</p>
+  <h2>Start reading manga free today.</h2>
+  <p>Free on the App Store. No account. No subscription. Read manga offline on iPhone.</p>
   <!-- Replace href with your actual App Store URL -->
   <a href="https://apps.apple.com/app/id6774454909" class="app-store-badge" id="cta-download">
     <svg height="56" viewBox="0 0 165 56" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -705,7 +875,7 @@
 <!-- ── FOOTER ── -->
 <footer>
   <div class="footer-inner">
-    <p>© 2026 MangaRead Reader. All rights reserved.</p>
+    <p>© 2026 MangaRead. Free manga reader for iPhone.</p>
     <div class="footer-links">
       <a href="https://shitatameru88.github.io/#privacy">Privacy</a>
       <a href="https://github.com/shitatameru88" target="_blank" rel="noopener">GitHub</a>
@@ -717,7 +887,6 @@
 <script>
   // On iOS, swap the App Store URL to use the itms-apps:// deep link scheme
   // so it opens the App Store app directly instead of the browser.
-  // Replace APP_STORE_ID below with your actual numeric App Store ID.
   const APP_STORE_ID = '6774454909';
   const APP_STORE_URL = 'https://apps.apple.com/app/id' + APP_STORE_ID;
   const DEEP_LINK    = 'itms-apps://itunes.apple.com/app/id' + APP_STORE_ID;
