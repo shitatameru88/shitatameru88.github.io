@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MangaRead Reader — Privacy-first manga reader for iOS</title>
+  <meta name="description" content="A local-first manga and comic reader for iOS. No accounts. No bundled content. Optional user-managed sources." />
+  <meta property="og:title" content="MangaRead Reader" />
+  <meta property="og:description" content="Privacy-first manga reader for iOS. Local library, optional sources, no tracking." />
+  <meta property="og:url" content="https://shitatameru88.github.io/" />
+  <meta name="theme-color" content="#0d0d14" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d14;
+      --bg2: #13131e;
+      --bg3: #1a1a28;
+      --border: rgba(255,255,255,0.07);
+      --accent: #7c5cfc;
+      --accent2: #4c8bff;
+      --text: #f0f0fa;
+      --text2: #9898b8;
+      --text3: #5a5a7a;
+      --radius: 18px;
+      --radius-sm: 10px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(20px, 5vw, 80px);
+      height: 60px;
+      background: rgba(13,13,20,0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1rem;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .nav-logo .icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .nav-logo .icon svg { display: block; }
+
+    .nav-links { display: flex; align-items: center; gap: 28px; }
+
+    .nav-links a {
+      color: var(--text2);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .btn-download-sm {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: opacity .2s, transform .2s;
+    }
+    .btn-download-sm:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: clamp(72px, 12vw, 130px) clamp(20px, 5vw, 80px) clamp(60px, 10vw, 110px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: -60px;
+      background:
+        radial-gradient(ellipse 700px 500px at 50% -80px, rgba(124,92,252,0.28) 0%, transparent 65%),
+        radial-gradient(ellipse 500px 300px at 80% 60%, rgba(76,139,255,0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .app-icon-wrap {
+      display: inline-block;
+      position: relative;
+      margin-bottom: 32px;
+    }
+
+    .app-icon {
+      width: 120px;
+      height: 120px;
+      border-radius: 28px;
+      background: linear-gradient(145deg, #1e1832, #0d0d14);
+      border: 1px solid rgba(124,92,252,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        0 0 0 1px rgba(124,92,252,0.2),
+        0 24px 60px rgba(124,92,252,0.3),
+        0 8px 20px rgba(0,0,0,0.6);
+    }
+
+    .app-icon svg { width: 68px; height: 68px; }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #fff 30%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: var(--text2);
+      max-width: 520px;
+      margin: 0 auto 40px;
+      font-weight: 400;
+    }
+
+    .hero-badges {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .app-store-badge {
+      display: inline-block;
+      transition: opacity .2s, transform .2s;
+    }
+    .app-store-badge:hover { opacity: 0.85; transform: translateY(-2px); }
+
+    .app-store-badge img {
+      height: 52px;
+      display: block;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 18px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text2);
+    }
+    .badge-pill .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #34d399;
+      flex-shrink: 0;
+    }
+
+    /* ── SECTION WRAPPER ── */
+    .section {
+      padding: clamp(60px, 8vw, 100px) clamp(20px, 5vw, 80px);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(1.7rem, 4vw, 2.5rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 1rem;
+      color: var(--text2);
+      max-width: 540px;
+      margin-bottom: 48px;
+    }
+
+    /* ── FEATURES GRID ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .feature-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      transition: border-color .25s, transform .25s;
+    }
+    .feature-card:hover {
+      border-color: rgba(124,92,252,0.4);
+      transform: translateY(-3px);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(124,92,252,0.2), rgba(76,139,255,0.12));
+      border: 1px solid rgba(124,92,252,0.25);
+      display: grid;
+      place-items: center;
+      margin-bottom: 18px;
+      font-size: 1.4rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+
+    .feature-card p {
+      font-size: 0.875rem;
+      color: var(--text2);
+      line-height: 1.6;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0 clamp(20px, 5vw, 80px);
+    }
+
+    /* ── GUIDE ── */
+    .guide-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+    }
+
+    .guide-steps::before {
+      content: '';
+      position: absolute;
+      left: 23px;
+      top: 28px;
+      bottom: 28px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      border-radius: 2px;
+    }
+
+    .step {
+      display: flex;
+      gap: 20px;
+      padding: 24px 0;
+      position: relative;
+    }
+
+    .step-num {
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 1rem;
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(124,92,252,0.4);
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-body { flex: 1; padding-top: 10px; }
+
+    .step-body h3 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+
+    .step-body p {
+      font-size: 0.9rem;
+      color: var(--text2);
+      line-height: 1.65;
+    }
+
+    .step-body code {
+      display: inline-block;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1px 8px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.82rem;
+      color: var(--accent);
+    }
+
+    /* ── CALLOUT ── */
+    .callout {
+      margin-top: 32px;
+      padding: 20px 24px;
+      background: rgba(124,92,252,0.08);
+      border: 1px solid rgba(124,92,252,0.25);
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      color: var(--text2);
+      line-height: 1.65;
+    }
+    .callout strong { color: var(--text); }
+
+    /* ── PRIVACY ── */
+    .privacy-strip {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: clamp(40px, 6vw, 72px) clamp(20px, 5vw, 80px);
+    }
+
+    .privacy-strip-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px 48px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .privacy-points {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .privacy-point {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text2);
+    }
+
+    .privacy-point .check {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(52,211,153,0.15);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .privacy-point .check::before {
+      content: '✓';
+      font-size: 0.7rem;
+      color: #34d399;
+      font-weight: 900;
+    }
+
+    /* ── CTA ── */
+    .cta {
+      text-align: center;
+      padding: clamp(60px, 10vw, 110px) clamp(20px, 5vw, 80px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      inset: -80px;
+      background: radial-gradient(ellipse 600px 400px at 50% 100%, rgba(124,92,252,0.2) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .cta h2 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+
+    .cta p {
+      color: var(--text2);
+      font-size: 1rem;
+      margin-bottom: 36px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px clamp(20px, 5vw, 80px);
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-inner p {
+      font-size: 0.83rem;
+      color: var(--text3);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 0.83rem;
+      color: var(--text3);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--text2); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .nav-links a:not(:last-child) { display: none; }
+      .guide-steps::before { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="#" class="nav-logo">
+    <span class="icon">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="1" width="7" height="9" rx="1.5" fill="white" fill-opacity="0.9"/>
+        <rect x="10" y="1" width="7" height="5" rx="1.5" fill="white" fill-opacity="0.6"/>
+        <rect x="10" y="8" width="7" height="9" rx="1.5" fill="white" fill-opacity="0.75"/>
+        <rect x="1" y="12" width="7" height="5" rx="1.5" fill="white" fill-opacity="0.55"/>
+      </svg>
+    </span>
+    MangaRead
+  </a>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#guide">Guide</a>
+    <a href="#privacy">Privacy</a>
+    <!-- Replace href with your actual App Store URL -->
+    <a href="https://apps.apple.com/app/id0000000000" class="btn-download-sm" id="nav-download">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      Download
+    </a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="app-icon-wrap">
+    <div class="app-icon">
+      <svg width="68" height="68" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="4" width="28" height="38" rx="5" fill="url(#g1)"/>
+        <rect x="36" y="4" width="28" height="22" rx="5" fill="url(#g2)"/>
+        <rect x="36" y="30" width="28" height="34" rx="5" fill="url(#g3)"/>
+        <rect x="4" y="46" width="28" height="18" rx="5" fill="url(#g4)"/>
+        <defs>
+          <linearGradient id="g1" x1="4" y1="4" x2="32" y2="42" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#a78bfa"/>
+            <stop offset="1" stop-color="#7c5cfc"/>
+          </linearGradient>
+          <linearGradient id="g2" x1="36" y1="4" x2="64" y2="26" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#60a5fa"/>
+            <stop offset="1" stop-color="#4c8bff"/>
+          </linearGradient>
+          <linearGradient id="g3" x1="36" y1="30" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#818cf8"/>
+            <stop offset="1" stop-color="#6366f1"/>
+          </linearGradient>
+          <linearGradient id="g4" x1="4" y1="46" x2="32" y2="64" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#c4b5fd"/>
+            <stop offset="1" stop-color="#a78bfa"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  </div>
+
+  <h1>MangaRead Reader</h1>
+  <p>A privacy-first manga and comic reader for iOS. Your library, your device, no accounts required.</p>
+
+  <div class="hero-badges">
+    <!-- Replace href with your actual App Store URL -->
+    <a href="https://apps.apple.com/app/id0000000000" class="app-store-badge" id="hero-download">
+      <svg height="52" viewBox="0 0 155 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="155" height="52" rx="10" fill="#000"/>
+        <rect width="155" height="52" rx="10" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+        <text x="43" y="20" font-family="'Inter',-apple-system,sans-serif" font-size="10" fill="rgba(255,255,255,0.7)" font-weight="500">Download on the</text>
+        <text x="43" y="36" font-family="'Inter',-apple-system,sans-serif" font-size="18" fill="white" font-weight="700" letter-spacing="-0.3">App Store</text>
+        <path d="M24 26c.85-1.42 2.25-2.3 3.8-2.33 1.18-.02 2.3.8 3.04.8.72 0 2.08-.99 3.5-.84.6.03 2.28.24 3.36 1.83-.08.05-2 1.18-1.98 3.52.03 2.79 2.44 3.72 2.47 3.73-.03.06-.39 1.33-1.27 2.61-.77 1.15-1.58 2.26-2.81 2.28-1.24.03-1.63-.73-3.04-.73-1.41 0-1.84.71-3.01.76-1.21.05-2.12-1.22-2.9-2.34C23.93 33.1 22.82 29.2 24.4 26.5l-.4-.5zm6.36-6.5c.67-.77 1.79-1.35 2.71-1.39.12 1.08-.31 2.17-.96 2.95-.64.79-1.69 1.4-2.72 1.31-.14-1.06.38-2.17.97-2.87z" fill="white"/>
+      </svg>
+    </a>
+    <span class="badge-pill">
+      <span class="dot"></span>
+      iOS 16+ &nbsp;·&nbsp; Free
+    </span>
+  </div>
+</section>
+
+<!-- ── FEATURES ── -->
+<section class="section" id="features">
+  <div class="section-label">What's inside</div>
+  <h2 class="section-title">Everything you need.<br>Nothing you don't.</h2>
+  <p class="section-sub">Built for readers who want control — over their content, their data, and their experience.</p>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">📚</div>
+      <h3>Local Library</h3>
+      <p>Import CBZ, CBR, and ZIP comic archives directly from Files. Your collection stays on your device — no cloud uploads, no syncing.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔍</div>
+      <h3>User-managed Sources</h3>
+      <p>Optional community source adapters let you search and read from sources you choose to enable. Everything is opt-in and transparent.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📖</div>
+      <h3>Smart Reader</h3>
+      <p>Webtoon scroll, vertical, right-to-left paged, and left-to-right paged modes. Adaptive brightness, double-page, and border crop. Tap zones for one-hand navigation.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Reading Insights</h3>
+      <p>Track reading sessions, chapters completed, and time spent — all stored locally. Never sent anywhere.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔔</div>
+      <h3>Chapter Alerts</h3>
+      <p>Save titles to your library and get notified when new chapters are detected. Pull down in Updates to check manually any time.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💾</div>
+      <h3>Offline Downloads</h3>
+      <p>Download full chapters and read without an internet connection. Manage your cache from Settings whenever you need space back.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <h3>App Lock</h3>
+      <p>Protect your library with Face ID, Touch ID, or your device passcode. No accounts to hack — everything stays on-device.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">♻️</div>
+      <h3>Backup &amp; Restore</h3>
+      <p>Export your library metadata and archive files as a local ZIP. Restore on any device without a server in the middle.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── GUIDE ── -->
+<section class="section" id="guide">
+  <div class="section-label">Getting started</div>
+  <h2 class="section-title">How to enable<br>User Sources</h2>
+  <p class="section-sub">Sources are off by default. Here's how to turn them on and start reading.</p>
+
+  <div class="guide-steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>Open the More tab</h3>
+        <p>Tap the <code>More</code> tab in the bottom navigation bar (the last icon, bottom-right). This is where Settings, sources, and all app controls live.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>Tap User Sources</h3>
+        <p>At the top of the More screen, tap <code>User Sources</code>. You'll see a list of all available source adapters built into the app, along with their health status.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>Toggle a source on</h3>
+        <p>Find the source you want and flip its toggle. A confirmation dialog will appear — tap <code>Enable</code> to confirm. The source will start a health check immediately. A green indicator means it's reachable.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h3>Go to Browse and search</h3>
+        <p>Head to the <code>Browse</code> tab. The search bar will now say <em>"Search in [Source Name]"</em>. Type any title to start reading. Save titles to your library from the manga detail screen.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h3>Save &amp; track updates</h3>
+        <p>Tap <code>Save to Library</code> on any manga to follow it. The <code>Updates</code> tab shows new chapters grouped by day. Pull down to check for the latest chapters across all saved titles at once.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Note:</strong> Sources connect to third-party websites. Availability and content depend on those services — MangaRead does not host, distribute, or affiliate with any source content. Only enable sources you are permitted to access in your region.
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── PRIVACY STRIP ── -->
+<section class="privacy-strip" id="privacy">
+  <div class="privacy-strip-inner">
+    <div>
+      <div class="section-label" style="margin-bottom: 8px;">Privacy by design</div>
+      <h2 class="section-title" style="font-size: 1.6rem; margin-bottom: 0;">Built local-first. Always.</h2>
+    </div>
+    <div class="privacy-points">
+      <div class="privacy-point"><span class="check"></span>No user accounts</div>
+      <div class="privacy-point"><span class="check"></span>No bundled copyrighted content</div>
+      <div class="privacy-point"><span class="check"></span>Reading history stays on-device</div>
+      <div class="privacy-point"><span class="check"></span>Sources are optional and opt-in</div>
+      <div class="privacy-point"><span class="check"></span>No data sold to third parties</div>
+      <div class="privacy-point"><span class="check"></span>App Lock with Face ID / Touch ID</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta">
+  <h2>Start reading today.</h2>
+  <p>Free on the App Store. No account. No subscription required to get started.</p>
+  <!-- Replace href with your actual App Store URL -->
+  <a href="https://apps.apple.com/app/id0000000000" class="app-store-badge" id="cta-download">
+    <svg height="56" viewBox="0 0 165 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="165" height="56" rx="12" fill="#000"/>
+      <rect width="165" height="56" rx="12" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+      <text x="48" y="22" font-family="'Inter',-apple-system,sans-serif" font-size="11" fill="rgba(255,255,255,0.75)" font-weight="500">Download on the</text>
+      <text x="48" y="40" font-family="'Inter',-apple-system,sans-serif" font-size="19" fill="white" font-weight="700" letter-spacing="-0.3">App Store</text>
+      <path d="M25 28c.85-1.42 2.25-2.3 3.8-2.33 1.18-.02 2.3.8 3.04.8.72 0 2.08-.99 3.5-.84.6.03 2.28.24 3.36 1.83-.08.05-2 1.18-1.98 3.52.03 2.79 2.44 3.72 2.47 3.73-.03.06-.39 1.33-1.27 2.61-.77 1.15-1.58 2.26-2.81 2.28-1.24.03-1.63-.73-3.04-.73-1.41 0-1.84.71-3.01.76-1.21.05-2.12-1.22-2.9-2.34C24.93 35.1 23.82 31.2 25.4 28.5l-.4-.5zm6.36-6.5c.67-.77 1.79-1.35 2.71-1.39.12 1.08-.31 2.17-.96 2.95-.64.79-1.69 1.4-2.72 1.31-.14-1.06.38-2.17.97-2.87z" fill="white"/>
+    </svg>
+  </a>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <p>© 2026 MangaRead Reader. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="https://shitatameru88.github.io/#privacy">Privacy</a>
+      <a href="https://github.com/shitatameru88" target="_blank" rel="noopener">GitHub</a>
+      <a href="mailto:support@mangaread.app">Support</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // On iOS, swap the App Store URL to use the itms-apps:// deep link scheme
+  // so it opens the App Store app directly instead of the browser.
+  // Replace APP_STORE_ID below with your actual numeric App Store ID.
+  const APP_STORE_ID = '0000000000'; // <-- replace with your real ID
+  const APP_STORE_URL = 'https://apps.apple.com/app/id' + APP_STORE_ID;
+  const DEEP_LINK    = 'itms-apps://itunes.apple.com/app/id' + APP_STORE_ID;
+
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+  document.querySelectorAll('#nav-download, #hero-download, #cta-download').forEach(el => {
+    el.href = isIOS ? DEEP_LINK : APP_STORE_URL;
+  });
+</script>
+
+</body>
+</html>
