@@ -1,0 +1,18 @@
+{
+  "health": {
+    "1manga": "ok",
+    "asurascans": "ok",
+    "flamecomics": "ok",
+    "mangadex": "ok",
+    "thunderscans": "ok",
+    "vortexscans": "ok"
+  },
+  "keiyoushi": {
+    "1manga": "153fbece55832e8a76f32e26199bb6f8f4252fcb",
+    "asurascans": "e43a476f9f9ac99dd4c8271300aadf998a7f97af",
+    "flamecomics": "e43a476f9f9ac99dd4c8271300aadf998a7f97af",
+    "mangadex": "9843655a6a4eef1876992cf6ab0205482b7e4c8e",
+    "thunderscans": "153fbece55832e8a76f32e26199bb6f8f4252fcb",
+    "vortexscans": "34c463a1fe509bdcb623ac02b6574ec17610beda"
+  }
+}

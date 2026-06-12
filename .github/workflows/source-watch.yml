@@ -1,0 +1,58 @@
+name: Source watch
+
+# Daily watcher for MangaRead Reader's sources:
+# - new keiyoushi/extensions-source commits touching our six sources
+# - direct health probes of each source site/API
+# Opens an issue in this repo when something needs attention. Never edits
+# mangaread/source_config.v1.json by itself.
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: source-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run source watch
+        id: watch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/source_watch.py
+
+      - name: Persist watcher state
+        run: |
+          if ! git diff --quiet scripts/source_watch_state.json 2>/dev/null \
+             || [ -n "$(git status --porcelain scripts/source_watch_state.json)" ]; then
+            git config user.name "source-watch[bot]"
+            git config user.email "actions@github.com"
+            git add scripts/source_watch_state.json
+            git commit -m "chore: update source-watch state [skip ci]"
+            git push
+          fi
+
+      - name: Open issue with findings
+        if: steps.watch.outputs.findings == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue create \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "Source watch: action may be needed ($(date -u +%Y-%m-%d))" \
+            --body-file report.md \
+            --label source-watch
