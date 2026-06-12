@@ -44,6 +44,15 @@ WATCHED_PATHS = {
 HEALTH_CHECKS = [
     ("mangadex", "https://api.mangadex.org/manga?limit=1", ['"data"']),
     ("asurascans", "https://asuracomic.net/series?page=1", ["series"]),
+    # Search SEMANTICS, not just reachability: Asura once renamed its query
+    # param and the old one silently returned the default list (HTTP 200,
+    # looked healthy, broke in-app search + slug re-resolution). A query for
+    # a specific title must surface that title's slug.
+    (
+        "asurascans search",
+        "https://asurascans.com/browse?page=1&search=omniscient%20reader",
+        ["omniscient-readers-viewpoint"],
+    ),
     ("flamecomics", "https://flamecomics.xyz/", ["buildId"]),
     (
         "vortexscans",

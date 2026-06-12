@@ -2,9 +2,10 @@
   "health": {
     "1manga": "ok",
     "asurascans": "ok",
+    "asurascans search": "ok",
     "flamecomics": "ok",
     "mangadex": "ok",
-    "thunderscans": "ok",
+    "thunderscans": "fail",
     "vortexscans": "ok"
   },
   "keiyoushi": {
