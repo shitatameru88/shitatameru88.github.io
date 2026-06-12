@@ -149,11 +149,6 @@ def check_health(state):
             missing = [needle for needle in needles if needle not in body]
             if status == 200 and not missing:
                 current, detail = "ok", ""
-            elif status in (403, 503):
-                # Bot challenges block GitHub's runner IPs routinely; the
-                # site is probably fine for real users. Track separately so
-                # an ok->challenged transition is mentioned once, softly.
-                current, detail = "challenged", f"HTTP {status} (likely bot challenge)"
             else:
                 current = "fail"
                 detail = (
@@ -161,6 +156,18 @@ def check_health(state):
                     if missing
                     else f"HTTP {status}"
                 )
+        except urllib.error.HTTPError as error:
+            # urllib RAISES for 4xx/5xx, so this branch (not the happy path
+            # above) is where bot challenges land. Challenges block script
+            # UAs / runner IPs routinely while the site works for real
+            # users — track separately and report softly.
+            if error.code in (403, 503):
+                current, detail = (
+                    "challenged",
+                    f"HTTP {error.code} (likely bot challenge)",
+                )
+            else:
+                current, detail = "fail", f"HTTP {error.code}"
         except Exception as error:  # noqa: BLE001
             current, detail = "fail", f"request error: {error}"
         state["health"][source_id] = current
