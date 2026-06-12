@@ -1,47 +1,69 @@
 {
-  "schemaVersion": 1,
-  "sources": [
-    {
-      "id": "asurascans",
-      "popular": { "path": "/browse", "pagination": "queryParamAlways" },
-      "latest": { "path": "/", "pagination": "pathSegment" },
-      "search": {
-        "kind": "queryParam",
-        "path": "/browse",
-        "queryParamName": "name",
-        "pagination": "queryParamAlways"
-      }
-    },
-    {
-      "id": "thunderscans",
-      "popular": { "path": "/comics/", "pagination": "pathSegment" },
-      "latest": { "path": "/comics/", "pagination": "pathSegment" },
-      "search": {
-        "kind": "queryString",
-        "template": "/?s={query}",
-        "pagination": "pathSegment"
-      }
-    },
-    {
-      "id": "nelomanga",
-      "popular": { "path": "/popular", "pagination": "pathSegment" },
-      "latest": { "path": "/new", "pagination": "pathSegment" },
-      "search": {
-        "kind": "pathTemplate",
-        "template": "/search/story/{query}",
-        "pagination": "pathSegment"
-      },
-      "parserProfile": {
-        "listSelectors": [
-          ".media-manga a[href*=\"/manga/\"]",
-          ".media-left a[href*=\"/manga/\"]",
-          "h3 a[href*=\"/manga/\"]",
-          "h2 a[href*=\"/manga/\"]",
-          "a[href*=\"/manga/\"]"
-        ],
-        "chapterSelectors": ["a._3pfyN"],
-        "extraBlockedImageHints": ["thumb.mghcdn.com"]
-      }
-    }
-  ]
+ "schemaVersion": 1,
+ "sources": [
+  {
+   "id": "asurascans",
+   "popular": {
+    "path": "/browse",
+    "pagination": "queryParamAlways"
+   },
+   "latest": {
+    "path": "/",
+    "pagination": "pathSegment"
+   },
+   "search": {
+    "kind": "queryParam",
+    "path": "/browse",
+    "queryParamName": "search",
+    "pagination": "queryParamAlways"
+   }
+  },
+  {
+   "id": "thunderscans",
+   "popular": {
+    "path": "/comics/",
+    "pagination": "pathSegment"
+   },
+   "latest": {
+    "path": "/comics/",
+    "pagination": "pathSegment"
+   },
+   "search": {
+    "kind": "queryString",
+    "template": "/?s={query}",
+    "pagination": "pathSegment"
+   }
+  },
+  {
+   "id": "nelomanga",
+   "popular": {
+    "path": "/popular",
+    "pagination": "pathSegment"
+   },
+   "latest": {
+    "path": "/new",
+    "pagination": "pathSegment"
+   },
+   "search": {
+    "kind": "pathTemplate",
+    "template": "/search/story/{query}",
+    "pagination": "pathSegment"
+   },
+   "parserProfile": {
+    "listSelectors": [
+     ".media-manga a[href*=\"/manga/\"]",
+     ".media-left a[href*=\"/manga/\"]",
+     "h3 a[href*=\"/manga/\"]",
+     "h2 a[href*=\"/manga/\"]",
+     "a[href*=\"/manga/\"]"
+    ],
+    "chapterSelectors": [
+     "a._3pfyN"
+    ],
+    "extraBlockedImageHints": [
+     "thumb.mghcdn.com"
+    ]
+   }
+  }
+ ]
 }
