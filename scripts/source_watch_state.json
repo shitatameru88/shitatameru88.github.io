@@ -4,7 +4,7 @@
     "asurascans": "ok",
     "asurascans search": "ok",
     "flamecomics": "ok",
-    "mangadex": "fail",
+    "mangadex": "ok",
     "thunderscans": "ok",
     "vortexscans": "ok"
   },
@@ -14,6 +14,6 @@
     "flamecomics": "b60dada56a7218f4877ff7d7cbe60946a1c63427",
     "mangadex": "89779f6112f61e647846d9aa05c5dfe8574e7290",
     "thunderscans": "4574c2213cb08da95430198cfde7dd4ad5e28006",
-    "vortexscans": "89779f6112f61e647846d9aa05c5dfe8574e7290"
+    "vortexscans": "410b3b936a184b53e6bbd93bb4699c9007b9c419"
   }
 }
