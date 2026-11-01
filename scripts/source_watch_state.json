@@ -4,15 +4,15 @@
     "asurascans": "ok",
     "asurascans search": "ok",
     "flamecomics": "ok",
-    "mangadex": "ok",
+    "mangadex": "fail",
     "thunderscans": "ok",
     "vortexscans": "ok"
   },
   "keiyoushi": {
     "1manga": "f9c7b59293674bab911d9aa658b833ec8c307ca1",
-    "asurascans": "b60c3831f78156fbd375eb239140976a3020a429",
-    "flamecomics": "5e3e65a196a707be429e21a387c2f7cc0181177e",
-    "mangadex": "5240ce7bec6e0dfbc871318f19884961bc1032e9",
+    "asurascans": "fc7a827769f612dfa6dccb51e819f5b4eecaeab5",
+    "flamecomics": "fc7a827769f612dfa6dccb51e819f5b4eecaeab5",
+    "mangadex": "fc7a827769f612dfa6dccb51e819f5b4eecaeab5",
     "thunderscans": "4574c2213cb08da95430198cfde7dd4ad5e28006",
     "vortexscans": "87e67d74af70fcdb1f3be0cb5149382ab43fb990"
   }
