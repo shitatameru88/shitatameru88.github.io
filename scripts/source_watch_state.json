@@ -3,7 +3,7 @@
     "1manga": "challenged",
     "asurascans": "ok",
     "asurascans search": "ok",
-    "flamecomics": "ok",
+    "flamecomics": "fail",
     "mangadex": "fail",
     "thunderscans": "ok",
     "vortexscans": "ok"
@@ -12,7 +12,7 @@
     "1manga": "f9c7b59293674bab911d9aa658b833ec8c307ca1",
     "asurascans": "fc7a827769f612dfa6dccb51e819f5b4eecaeab5",
     "flamecomics": "fc7a827769f612dfa6dccb51e819f5b4eecaeab5",
-    "mangadex": "fc7a827769f612dfa6dccb51e819f5b4eecaeab5",
+    "mangadex": "a4ff294bf5d9e87c7a7f73da2d4a7b4ab85f8e5d",
     "thunderscans": "4574c2213cb08da95430198cfde7dd4ad5e28006",
     "vortexscans": "87e67d74af70fcdb1f3be0cb5149382ab43fb990"
   }
